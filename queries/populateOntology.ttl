@@ -1,0 +1,94 @@
+prefix fx: <http://sparql.xyz/facade-x/ns/>
+prefix xyz: <http://sparql.xyz/facade-x/data/>
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix schema: <http://schema.org/>
+prefix datatourisme: <https://www.datatourisme.fr/ontology/core#>
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+prefix kb: <https://www.datatourisme.fr/resource/core#>
+prefix dc: <http://purl.org/dc/elements/1.1/>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+    ?id a datatourisme:Museum ;
+       rdfs:label ?nomOfficiel ;
+       rdfs:comment ?protectionBatiment ;
+       datatourisme:isLocatedAt ?place ;
+       datatourisme:hasContact ?contact ;
+       datatourisme:hasDescription ?description;
+       datatourisme:hasTheme ?theme;
+       datatourisme:hasExternalReference ?extref;
+       datatourisme:lastUpdate ?lastUpdate.
+
+    ?place a schema:Place, datatourisme:Place ;
+        schema:address ?address ;
+        schema:geo ?geo .
+
+    ?geo a schema:GeoCoordinates ;
+        schema:latitude ?lat ;
+        schema:longitude ?lon ;
+        datatourisme:latlon ?latlon.
+
+    ?address a schema:PostalAddress, datatourisme:PostalAddress ;
+        schema:addressLocality ?ville ;
+        schema:postalCode ?codePostal ;
+        schema:streetAddress ?adresse.
+
+    ?contact a foaf:Agent, datatourisme:Agent ;
+        foaf:homepage ?url ;
+        schema:telephone ?telephone.
+
+    ?description a datatourisme:Description ;
+        dc:description ?histoire ;
+        datatourisme:shortDescription ?atout;
+        owl:topDataProperty ?interet.
+
+    ?extref a datatourisme:ExternalReference ;
+        datatourisme:hasExternalIdentifier ?refmer ;
+        datatourisme:hasExternalPlatform ?indivRefmer.
+}
+
+WHERE {
+    SERVICE <x-sparql-anything:> {
+        fx:properties
+            fx:location "./data/musees-de-france-base-museofile.csv" ;
+            fx:media-type "text/csv" ;
+            fx:csv.headers "true" ;
+            fx:csv.delimiter ";".
+
+    []
+        xyz:Nom_officiel ?nomOfficiel ;
+        xyz:Adresse ?adresse ;
+        xyz:Code_postal ?codePostal ;
+        xyz:Ville ?ville ;
+        xyz:Region ?region ;
+        xyz:Departement ?departement ;
+        xyz:URL ?url ;
+        xyz:Telephone ?telephone ;
+        xyz:Histoire ?histoire;
+        xyz:Atout ?atout;
+        xyz:Themes ?themes ;
+        xyz:Interet ?interet;
+        xyz:Protection_batiment ?protectionBatiment;
+        xyz:Refmer ?refmer ;
+        xyz:Date_de_mise_a_jour ?date ;
+        xyz:Coordonnees ?coords
+
+    }
+
+    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?id)
+    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?place)
+    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?address)
+    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?contact)
+    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?description)
+    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?extref)
+    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?geo)
+    BIND(IRI("https://www.datatourisme.fr/resource/core#BaseMerimee") AS ?indivRefmer)
+    BIND(STRDT(STR(?date), xsd:date) AS ?lastUpdate)
+
+    BIND(STRDT(STRBEFORE(?coords, ","), xsd:decimal) AS ?lat)
+    BIND(STRDT(STRAFTER(?coords, ", "), xsd:decimal) AS ?lon)
+    BIND(STRDT(REPLACE(?coords, ", ", "#"), <http://www.bigdata.com/rdf/geospatial/literals/v1#lat-lon>) AS ?latlon)
+}
+

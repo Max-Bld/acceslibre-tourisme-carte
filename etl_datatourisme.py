@@ -1,9 +1,12 @@
 import pandas as pd
 import json
 from tqdm import tqdm
+import os
+
+root_path = os.getcwd()[:-20]
 
 def etl_datatourisme():
-    datatourisme = "/home/maximeb/pro/eonax/hackathon/datatourisme/"
+    datatourisme = f"{root_path}/datatourisme/"
 
     columns = ['type', 'name', 'lat', 'lon', 'city']
 
@@ -31,5 +34,5 @@ def etl_datatourisme():
 
         df.loc[id] = [type, name, lat, lon, city]
 
-    df.to_pickle('data/datatourisme.pkl')
+    df.to_pickle(f"{root_path}/visualisation-carte/data/datatourisme.pkl")
     return {'status': 'success'}
