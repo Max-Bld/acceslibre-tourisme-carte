@@ -1,0 +1,395 @@
+@prefix : <https://acceslibre.beta.gouv.fr/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix acceslibre: <https://acceslibre.beta.gouv.fr/ontology#> .
+@base <https://acceslibre.beta.gouv.fr/ontology#> .
+
+<https://acceslibre.beta.gouv.fr/ontology#> rdf:type owl:Ontology ;
+                                             owl:imports <https://www.datatourisme.fr/ontology/core/3.1.8> ;
+                                             <http://purl.org/dc/elements/1.1/creator> "Maxime Blanchard" ;
+                                             <http://purl.org/dc/elements/1.1/issued> "13th of January 2024" ;
+                                             <http://purl.org/vocab/vann/preferredNamespacePrefix> "acceslibre" ;
+                                             <http://purl.org/vocab/vann/preferredNamespaceUri> "https://acceslibre.beta.gouv.fr/ontology#" ;
+                                             rdfs:comment "Acceslibre extension of Datatourisme ontology" ;
+                                             rdfs:isDefinedBy "https://acceslibre.beta.gouv.fr/contrib/documentation/" ;
+                                             rdfs:label "Acceslibre Extension" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasAccessibility
+acceslibre:hasAccessibility rdf:type owl:ObjectProperty ;
+                            rdfs:domain <https://www.datatourisme.fr/ontology/core#PointOfInterest> ;
+                            rdfs:range acceslibre:Accessibility ;
+                            rdfs:label "has accessibility" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://acceslibre.beta.gouv.fr/ontology#accessibleRoomsNumber
+acceslibre:accessibleRoomsNumber rdf:type owl:DatatypeProperty ;
+                                 rdfs:domain acceslibre:Accessibility ;
+                                 rdfs:comment "Number of rooms accessible to a person in a wheelchair" ;
+                                 rdfs:label "Number of rooms accessible to a person in a wheelchair" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#accessibleShower
+acceslibre:accessibleShower rdf:type owl:DatatypeProperty ;
+                            rdfs:domain acceslibre:Accessibility ;
+                            rdfs:label "Accessible shower" ,
+                                       "The shower is Italian-style or equipped with an extra flat tray" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#adaptedParkingCloseToTheFacility
+acceslibre:adaptedParkingCloseToTheFacility rdf:type owl:DatatypeProperty ;
+                                            rdfs:domain acceslibre:Accessibility ;
+                                            rdfs:comment "Suitable parking spaces are available within 200 meters of the property" ;
+                                            rdfs:label "Adapted parking close to the facility"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#adaptedParkingsInFacility
+acceslibre:adaptedParkingsInFacility rdf:type owl:DatatypeProperty ;
+                                     rdfs:domain acceslibre:Accessibility ;
+                                     rdfs:range xsd:boolean ;
+                                     rdfs:comment "Suitable parking spaces are available within the property's grounds"@en ;
+                                     rdfs:label "Adapted parkings in the facility" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#adaptedWarningEquipment
+acceslibre:adaptedWarningEquipment rdf:type owl:DatatypeProperty ;
+                                   rdfs:domain acceslibre:Accessibility ;
+                                   rdfs:comment "The establishment has one or more alert equipment by light flash or vibration" ;
+                                   rdfs:label "Adapted warning equipment" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#difficultyOfTheSlope
+acceslibre:difficultyOfTheSlope rdf:type owl:DatatypeProperty ;
+                                rdfs:domain acceslibre:Accessibility ;
+                                rdfs:comment "Difficulty of the slope"@en ;
+                                rdfs:label "Degree of difficulty of the slope" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#directionOfTheStaircase
+acceslibre:directionOfTheStaircase rdf:type owl:DatatypeProperty ;
+                                   rdfs:domain acceslibre:Accessibility ;
+                                   rdfs:comment "Direction of movement of the steps or staircase" ;
+                                   rdfs:label "Direction of the staircase" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#doorHandling
+acceslibre:doorHandling rdf:type owl:DatatypeProperty ;
+                        rdfs:domain acceslibre:Accessibility ;
+                        rdfs:comment "Door opening mode" ;
+                        rdfs:label "Door handling" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#entranceForReducedMobility
+acceslibre:entranceForReducedMobility rdf:type owl:DatatypeProperty ;
+                                      rdfs:domain acceslibre:Accessibility ;
+                                      rdfs:comment "Presence of a specific secondary entrance dedicated to people with reduced mobility" ;
+                                      rdfs:label "Specific entrance for people with reduced mobility" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#exteriorCladding
+acceslibre:exteriorCladding rdf:type owl:DatatypeProperty ;
+                            rdfs:domain acceslibre:Accessibility ;
+                            rdfs:label "Exterior cladding"@en ,
+                                       "The surface is stable (absence of paving stones, gravel, earth, grass, sand, or any non-stabilized surface)" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasADoor
+acceslibre:hasADoor rdf:type owl:DatatypeProperty ;
+                    rdfs:domain acceslibre:Accessibility ;
+                    rdfs:comment "Presence of a door at the facility"@en ;
+                    rdfs:label "Entrance door"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasAccessibleToilet
+acceslibre:hasAccessibleToilet rdf:type owl:DatatypeProperty ;
+                               rdfs:domain acceslibre:Accessibility ;
+                               rdfs:comment "The toilet has a user space next to the bowl" ;
+                               rdfs:label "Accessible toilet" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasAudioDescription
+acceslibre:hasAudioDescription rdf:type owl:DatatypeProperty ;
+                               rdfs:domain acceslibre:Accessibility ;
+                               rdfs:comment "The facility offers audio description" ;
+                               rdfs:label "Audio description" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasCallingDevice
+acceslibre:hasCallingDevice rdf:type owl:DatatypeProperty ;
+                            rdfs:domain acceslibre:Accessibility ;
+                            rdfs:comment "Presence of a device such as a doorbell to signal its presence" ;
+                            rdfs:label "Calling device at the entrance" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasElevator
+acceslibre:hasElevator rdf:type owl:DatatypeProperty ;
+                       rdfs:domain acceslibre:Accessibility ;
+                       rdfs:label "Has an elevator" ,
+                                  "Presence of an elevator" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasGlassIdentification
+acceslibre:hasGlassIdentification rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain acceslibre:Accessibility ;
+                                  rdfs:comment "Contrasting elements allow you to visualize the glass parts of the entrance" ;
+                                  rdfs:label "Identification of the glass" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasGlazedEntrance
+acceslibre:hasGlazedEntrance rdf:type owl:DatatypeProperty ;
+                             rdfs:domain acceslibre:Accessibility ;
+                             rdfs:comment "The front door is glazed" ;
+                             rdfs:label "Glazed entrance" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasGroundLevelEntrance
+acceslibre:hasGroundLevelEntrance rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain acceslibre:Accessibility ;
+                                  rdfs:comment "The entrance is on the same level, that is to say without a sudden break in level." ;
+                                  rdfs:label "Ground level entrance" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasGuideStrip
+acceslibre:hasGuideStrip rdf:type owl:DatatypeProperty ;
+                         rdfs:domain acceslibre:Accessibility ;
+                         rdfs:comment "Presence of a guiding strip on the ground facilitating the movement of a blind or visually impaired person"@en ;
+                         rdfs:label "Guide strip"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasHandrail
+acceslibre:hasHandrail rdf:type owl:DatatypeProperty ;
+                       rdfs:domain acceslibre:Accessibility ;
+                       rdfs:label "Has handrail"@en ,
+                                  "The staircase is equipped with one or more handrails"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasHumanAssistance
+acceslibre:hasHumanAssistance rdf:type owl:DatatypeProperty ;
+                              rdfs:domain acceslibre:Accessibility ;
+                              rdfs:comment "Possibility of human assistance for movement" ;
+                              rdfs:label "Human assistance" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasIdentifiableEntrance
+acceslibre:hasIdentifiableEntrance rdf:type owl:DatatypeProperty ;
+                                   rdfs:domain acceslibre:Accessibility ;
+                                   rdfs:comment "The entrance to the establishment is easily located"@en ;
+                                   rdfs:label "Easily identifiable entrance"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasLocationAudioSignal
+acceslibre:hasLocationAudioSignal rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain acceslibre:Accessibility ;
+                                  rdfs:comment "Presence of an audio beacon making it easier to locate by a blind or visually impaired person" ;
+                                  rdfs:label "Audio location signal at the entrance" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasPathNarrowing
+acceslibre:hasPathNarrowing rdf:type owl:DatatypeProperty ;
+                            rdfs:domain acceslibre:Accessibility ;
+                            rdfs:label "One or more narrowings less than 90 centimeters from the path to reach the reception area"@en ,
+                                       "Path narrowing"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasPathOnSlope
+acceslibre:hasPathOnSlope rdf:type owl:DatatypeProperty ;
+                          rdfs:domain acceslibre:Accessibility ;
+                          rdfs:label "Path is on a slope"@en ,
+                                     "Has path on a slope" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasRamp
+acceslibre:hasRamp rdf:type owl:DatatypeProperty ;
+                   rdfs:domain acceslibre:Accessibility ;
+                   rdfs:label "Has ramp"@en ,
+                              "Presence of a stationary or removable ramp" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasSecureShower
+acceslibre:hasSecureShower rdf:type owl:DatatypeProperty ;
+                           rdfs:domain acceslibre:Accessibility ;
+                           rdfs:comment "The shower is equipped with a horizontal grab bar" ;
+                           rdfs:label "Secure shower" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasSecureToilet
+acceslibre:hasSecureToilet rdf:type owl:DatatypeProperty ;
+                           rdfs:domain acceslibre:Accessibility ;
+                           rdfs:comment "The toilet is equipped with a horizontal grab bar" ;
+                           rdfs:label "Secure toilet" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasShowerSeat
+acceslibre:hasShowerSeat rdf:type owl:DatatypeProperty ;
+                         rdfs:domain acceslibre:Accessibility ;
+                         rdfs:comment "The shower is equipped with a shower seat" ;
+                         rdfs:label "Shower seat" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasTypeOfDoor
+acceslibre:hasTypeOfDoor rdf:type owl:DatatypeProperty ;
+                         rdfs:domain acceslibre:Accessibility ;
+                         rdfs:comment "Type of door" ;
+                         rdfs:label "Type of door"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hasTypeofCallingDevice
+acceslibre:hasTypeofCallingDevice rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain acceslibre:Accessibility ;
+                                  rdfs:comment "Calling devices present" ;
+                                  rdfs:label "Type of call device at the entrance" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hearingAids
+acceslibre:hearingAids rdf:type owl:DatatypeProperty ;
+                       rdfs:domain acceslibre:Accessibility ;
+                       rdfs:comment "Presence of products or services dedicated to deaf or hard of hearing people" ;
+                       rdfs:label "Presence of hearing and comprehension aids" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#hearingAidsList
+acceslibre:hearingAidsList rdf:type owl:DatatypeProperty ;
+                           rdfs:domain acceslibre:Accessibility ;
+                           rdfs:comment "Equipment or services available" ;
+                           rdfs:label "List of hearing and communication aids" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#lengthOfTheSlope
+acceslibre:lengthOfTheSlope rdf:type owl:DatatypeProperty ;
+                            rdfs:domain acceslibre:Accessibility ;
+                            rdfs:comment "Length of the slope"@en ;
+                            rdfs:label "Length of the slope" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#numberOfSteps
+acceslibre:numberOfSteps rdf:type owl:DatatypeProperty ;
+                         rdfs:domain acceslibre:Accessibility ;
+                         rdfs:comment "Number of steps of the staircase"@en ;
+                         rdfs:label "Number of steps" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#outsidePath
+acceslibre:outsidePath rdf:type owl:DatatypeProperty ;
+                       rdfs:domain acceslibre:Accessibility ;
+                       rdfs:comment "Access to the entrance from the road is via an exterior path."@en ;
+                       rdfs:label "Outside Path"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#outsideWalkwayOnGroundLevel
+acceslibre:outsideWalkwayOnGroundLevel rdf:type owl:DatatypeProperty ;
+                                       rdfs:domain acceslibre:Accessibility ;
+                                       rdfs:comment "Access to this space is on the same ground-level, i.e. without any sudden change in level"@en ;
+                                       rdfs:label "Outside walkway on ground-level"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#parkingInTheFacility
+acceslibre:parkingInTheFacility rdf:type owl:DatatypeProperty ;
+                                rdfs:domain acceslibre:Accessibility ;
+                                rdfs:range xsd:boolean ;
+                                rdfs:comment "Parking spaces are available within the property's grounds"@en ;
+                                rdfs:label "Parking in the facility" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#parkingNearTheFacility
+acceslibre:parkingNearTheFacility rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain acceslibre:Accessibility ;
+                                  rdfs:comment "Parking spaces are available within 200 meters of the property"@en ;
+                                  rdfs:label "Parking near the facility"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#pathCamber
+acceslibre:pathCamber rdf:type owl:DatatypeProperty ;
+                      rdfs:domain acceslibre:Accessibility ;
+                      rdfs:comment "Camber or cross slope of the road"@en ;
+                      rdfs:label "Path's camber"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#pathwayBetweenEntranceAndReception
+acceslibre:pathwayBetweenEntranceAndReception rdf:type owl:DatatypeProperty ;
+                                              rdfs:domain acceslibre:Accessibility ;
+                                              rdfs:comment "Access to this space is on the same ground-level, i.e. without any sudden change in level" ;
+                                              rdfs:label "Pathway between the main entrance of the building and the reception of the facility" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#proximitytoPublicTransportationStop
+acceslibre:proximitytoPublicTransportationStop rdf:type owl:DatatypeProperty ;
+                                               rdfs:domain acceslibre:Accessibility ;
+                                               rdfs:range xsd:boolean ;
+                                               rdfs:label "Proximity to a public transportation stop" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#receptionStaff
+acceslibre:receptionStaff rdf:type owl:DatatypeProperty ;
+                          rdfs:domain acceslibre:Accessibility ;
+                          rdfs:comment "Staff for the reception of disabled people" ;
+                          rdfs:label "Reception staff" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#roomNumbersVisibility
+acceslibre:roomNumbersVisibility rdf:type owl:DatatypeProperty ;
+                                 rdfs:domain acceslibre:Accessibility ;
+                                 rdfs:comment "Room numbers are identifiable and embossed" ;
+                                 rdfs:label "Visibility of room numbers" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#secondaryEntranceforReducedMobility
+acceslibre:secondaryEntranceforReducedMobility rdf:type owl:DatatypeProperty ;
+                                               rdfs:domain acceslibre:Accessibility ;
+                                               rdfs:comment "Details on how to access the specific PRM entrance" ;
+                                               rdfs:label "Specific secondary entrance dedicated to people with a disability" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#secureStepsOfStaircase
+acceslibre:secureStepsOfStaircase rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain acceslibre:Accessibility ;
+                                  rdfs:label "Presence of contrasting stair nosings, a warning strip at the top of the stairs and/or contrasting first and last risers"@en ,
+                                             "Secure steps of staircase"@en .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#specificAccompaniement
+acceslibre:specificAccompaniement rdf:type owl:DatatypeProperty ;
+                                  rdfs:domain acceslibre:Accessibility ;
+                                  rdfs:comment "Personalized support is offered to present the room to a customer with a disability, particularly blind or visually impaired" ;
+                                  rdfs:label "Specific accompaniment" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#typeOfAudioEquipment
+acceslibre:typeOfAudioEquipment rdf:type owl:DatatypeProperty ;
+                                rdfs:domain acceslibre:Accessibility ;
+                                rdfs:comment "Available equipment" ;
+                                rdfs:label "Type of equipment for audio description" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#visibleReceptionArea
+acceslibre:visibleReceptionArea rdf:type owl:DatatypeProperty ;
+                                rdfs:domain acceslibre:Accessibility ;
+                                rdfs:comment "The reception area (reception counter, cash register, secretariat, etc.) is visible from the entrance to the building" ;
+                                rdfs:label "Visibility of the reception area" .
+
+
+###  https://acceslibre.beta.gouv.fr/ontology#widthOfDoor
+acceslibre:widthOfDoor rdf:type owl:DatatypeProperty ;
+                       rdfs:domain acceslibre:Accessibility ;
+                       rdfs:comment "Minimum front door width" ;
+                       rdfs:label "Width of the door" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://acceslibre.beta.gouv.fr/ontology#Accessibility
+acceslibre:Accessibility rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
