@@ -9,19 +9,15 @@ prefix kb: <https://www.datatourisme.fr/resource/core#>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix acceslibre: <https://acceslibre.beta.gouv.fr/ontology#>
 
 CONSTRUCT {
-    ?id a datatourisme:Museum ;
-       rdfs:label ?nomOfficiel ;
-       rdfs:comment ?protectionBatiment ;
-       datatourisme:isLocatedAt ?place ;
-       datatourisme:hasContact ?contact ;
-       datatourisme:hasDescription ?description;
-       datatourisme:hasTheme ?theme;
-       datatourisme:hasExternalReference ?extref;
-       datatourisme:lastUpdate ?lastUpdate.
+    ?id a ?class ;
+        rdfs:label ?nom ;
+        datatourisme:isLocatedAt ?place ;
+        acceslibre:hasAccessibility ?accessibility.
 
-    ?place a schema:Place, datatourisme:Place ;
+    ?place a datatourisme:Place ;
         schema:address ?address ;
         schema:geo ?geo .
 
@@ -31,7 +27,7 @@ CONSTRUCT {
         datatourisme:latlon ?latlon.
 
     ?address a schema:PostalAddress, datatourisme:PostalAddress ;
-        schema:addressLocality ?ville ;
+        schema:addressLocality ?commune ;
         schema:postalCode ?codePostal ;
         schema:streetAddress ?adresse.
 
@@ -44,51 +40,90 @@ CONSTRUCT {
         datatourisme:shortDescription ?atout;
         owl:topDataProperty ?interet.
 
-    ?extref a datatourisme:ExternalReference ;
-        datatourisme:hasExternalIdentifier ?refmer ;
-        datatourisme:hasExternalPlatform ?indivRefmer.
+    ?accessibility a acceslibre:Accessibility ;
+        acceslibre:parkingInTheFacility ?stationnement_presence ;
+        acceslibre:parkingNearTheFacility ?stationnement_ext_presence ;
+        acceslibre:adaptedParkingCloseToTheFacility ?stationnement_ext_pmr ;
+        acceslibre:accessAdditionalInformation ?transport_information ;
+
+        acceslibre:easilyIdentifiableEntrance ?entree_reperage ;
+        acceslibre:hasADoor ?entree_porte_presence ;
+        acceslibre:glazedEntrance ?entree_vitree ;
+
+        acceslibre:outsidePath ?cheminement_ext_presence ;
+
+        acceslibre:visibleReceptionArea ?accueil_visibilite;
+        acceslibre:pathwayBetweenEntranceAndReception ?accueil_cheminement_plain_pied
+
+
 }
 
 WHERE {
     SERVICE <x-sparql-anything:> {
         fx:properties
-            fx:location "./data/musees-de-france-base-museofile.csv" ;
-            fx:media-type "text/csv" ;
-            fx:csv.headers "true" ;
-            fx:csv.delimiter ";".
+            fx:location "./data/acceslibre/results-acceslibre-0.json" ;
+            fx:media-type "application/json".
 
-    []
-        xyz:Nom_officiel ?nomOfficiel ;
-        xyz:Adresse ?adresse ;
-        xyz:Code_postal ?codePostal ;
-        xyz:Ville ?ville ;
-        xyz:Region ?region ;
-        xyz:Departement ?departement ;
-        xyz:URL ?url ;
-        xyz:Telephone ?telephone ;
-        xyz:Histoire ?histoire;
-        xyz:Atout ?atout;
-        xyz:Themes ?themes ;
-        xyz:Interet ?interet;
-        xyz:Protection_batiment ?protectionBatiment;
-        xyz:Refmer ?refmer ;
-        xyz:Date_de_mise_a_jour ?date ;
-        xyz:Coordonnees ?coords
-
+    [] fx:anySlot [
+        xyz:uuid ?uuid ;
+        xyz:nom ?nom ;
+        xyz:activite [
+            xyz:nom ?nomActivite
+            ] ;
+        xyz:adresse ?adresse ;
+        xyz:commune ?commune ;
+        xyz:code_postal ?codePostal ;
+        xyz:geom [
+            xyz:coordinates [ rdf:_1 ?lon; rdf:_2 ?lat]
+            ] ;
+        xyz:site_internet ?url ;
+        xyz:telephone ?telephone ;
+        xyz:accessibilite [
+            xyz:transport [
+                xyz:stationnement_presence ?stationnement_presence ;
+                xyz:stationnement_ext_presence ?stationnement_ext_presence ;
+                xyz:stationnement_ext_pmr ?stationnement_ext_pmr ;
+                xyz:transport_information ?transport_information
+                ] ;
+            xyz:entree [
+                xyz:entree_porte_presence ?entree_porte_presence ;
+                xyz:entree_reperage ?entree_reperage ;
+                xyz:entree_vitree ?entree_vitree
+                ] ;
+            xyz:cheminement_ext [
+                xyz:cheminement_ext_presence ?cheminement_ext_presence
+                ] ;
+            xyz:accueil [
+                xyz:accueil_visibilite ?accueil_visibilite ;
+                xyz:accueil_cheminement_plain_pied ?accueil_cheminement_plain_pied
+                ]
+        ]
+        ]
     }
 
-    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?id)
-    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?place)
-    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?address)
-    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?contact)
-    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?description)
-    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?extref)
-    BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?geo)
-    BIND(IRI("https://www.datatourisme.fr/resource/core#BaseMerimee") AS ?indivRefmer)
-    BIND(STRDT(STR(?date), xsd:date) AS ?lastUpdate)
+BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", ?uuid)) AS ?id)
+BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?place)
+BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?accessibility)
+BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?address)
+BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?geo)
+BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?contact)
+BIND(IRI(CONCAT("https://www.datatourisme.fr/ontology/core#", STRUUID())) AS ?description)
 
-    BIND(STRDT(STRBEFORE(?coords, ","), xsd:decimal) AS ?lat)
-    BIND(STRDT(STRAFTER(?coords, ", "), xsd:decimal) AS ?lon)
-    BIND(STRDT(REPLACE(?coords, ", ", "#"), <http://www.bigdata.com/rdf/geospatial/literals/v1#lat-lon>) AS ?latlon)
+BIND (
+  COALESCE(
+    IF(?nomActivite = "Restauration Rapide", IRI("https://www.datatourisme.fr/ontology/core#FastFoodRestaurant"), 1/0),
+    IF(?nomActivite = "Droguerie", IRI("https://www.datatourisme.fr/ontology/core#Store"), 1/0),
+    IF(?nomActivite = "Office du tourisme", IRI("https://www.datatourisme.fr/ontology/core#LocalTouristOffice"), 1/0),
+    IF(?nomActivite = "Cimetière", IRI("https://www.datatourisme.fr/ontology/core#RemembranceSite"), 1/0),
+    IF((?nomActivite = "Ost\u00e9opathie" || ?nomActivite = "Herboristerie naturopathie"), IRI("https://www.datatourisme.fr/ontology/core#HealthcareProfessional"), 1/0),
+    IF(?nomActivite = "Caf\u00e9, bar, brasserie", IRI("https://www.datatourisme.fr/ontology/core#BarOrPub"), 1/0),
+    IF(?nomActivite = "Bien-être", IRI("https://www.datatourisme.fr/ontology/core#ServiceProvider"), 1/0),
+    IF(?nomActivite = "Hôtel restaurant", IRI("https://www.datatourisme.fr/ontology/core#HotelRestaurant"), 1/0),
+    IF(?nomActivite = "Hôtel", IRI("https://www.datatourisme.fr/ontology/core#Hotel"), 1/0),
+    IF(?nomActivite = "Bijouterie joaillerie", IRI("https://www.datatourisme.fr/ontology/core#CraftsmanShop"), 1/0),
+    IRI("https://www.datatourisme.fr/ontology/core#PointOfInterest")
+  ) AS ?class
+)
+
+BIND(STRDT(CONCAT(STR(?lat), "#", STR(?lon)), <http://www.bigdata.com/rdf/geospatial/literals/v1#lat-lon>) AS ?latlon)
 }
-
